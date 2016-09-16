@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="C:/Users/onkaar_singh/Downloads/aws-java-sdk-1.9.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/onkaar_singh/Downloads/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/onkaar_singh/Downloads/httpclient-4.3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/onkaar_singh/Downloads/jackson-annotations-2.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/onkaar_singh/Downloads/jackson-core-2.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/onkaar_singh/Downloads/jackson-databind-2.5.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/AWS"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,31 @@
+Details of Script created.
+
+
+1)awsConfigure.sh :  To configure aws on system
+
+2)createAutoScalingGroup.sh :	To create autoscaling group,  3 parameters passed..	1-Autoscaling Group Name
+										    	2-Launch configuration name
+											3-VPC subnet
+
+
+3)createLaunchConfigScript.sh  	3 parameters passed...					1-Launch Configuration Name
+											2-AMI-Id
+											3-Instance Type
+	
+4)updateAutoscalingGroup.sh	2 parameters passed...			 		1-Autoscaling group name
+											2-Launchconfiguration Name
+
+
+
+5)createLC_AndUpdateASG.sh						
+   This scripr first creates a launch configuration with specified AMI Id and the adds this launch configuration to existing autoscaling group.					
+
+				4 parameters passed...					1-LaunchConfiguration Name			
+											2-AMI-Id
+											3-Instance Type	
+											4-Autoscaling Group Name
+
+
+6)createAMI.sh 			3 parameters passed...					1-Instance Id
+											2-AMI Name
+											3-Description

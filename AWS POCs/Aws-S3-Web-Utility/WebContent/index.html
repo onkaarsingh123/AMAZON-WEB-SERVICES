@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>S3 Utility page</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<style>
+.mainlist {
+border : medium;
+background-color: silver;
+padding: 20px;
+width : 500px;
+margin-bottom: 10px;
+margin-top: 10px;
+}
+li
+{
+	border-left: 100px;
+	
+}
+</style>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	
+	$("#display").click(function(){
+		
+		  $.post("amazonServlet",
+				    {
+				        name: "none"
+				    },
+				    function(data, status){
+				      
+				    	var obj = JSON.parse(data);
+				    	$("#data").append("<ul >");
+				       for (x in obj) {
+				    	   
+				    	   var folder =   obj[x].name;
+				    	  $("#data").append("<li class=\"mainlist\" id=\""+folder+"\" onclick=\"getSubfolders('"+folder+"')\">"+ folder +"</li><ul class=\"no\"  id=\""+folder+"sublist\"></ul>");
+				    	 
+				    	}
+				       $("#data").append("</ul>");
+				        
+				    });
+		
+	});
+	
+});
+
+function getSubfolders(pFolder)
+{
+	var flag=$("#"+pFolder+"sublist").attr("class");
+	//console.log(flag);
+	if(flag=="yes")
+		{
+		$("#"+pFolder+"sublist").hide();
+		$("#"+pFolder+"sublist").attr("class","done");
+		}
+	
+	else if(flag=="done")
+		{
+		$("#"+pFolder+"sublist").show();
+		$("#"+pFolder+"sublist").attr("class","yes");
+		}
+	else
+		{
+		
+		
+		console.log(pFolder);
+	$.post("amazonServlet2",
+		    {
+		        name: pFolder
+		    },
+		    function(data, status){
+		      
+		    	var obj = JSON.parse(data);
+		    	
+		       for (x in obj) {
+		    	   
+		    	   var folder =   obj[x];
+		    	  
+		    	   var id = folder.replace(" ","_");
+		    	   var ids = id.replace("/","");
+		    	   var len = ids.length;
+		    	   console.log(ids.search(" "));
+		    	    while(ids.search(" ")!= -1 || ids.search("/")!= -1)
+	    		   {
+	    		   	 id = ids.replace(" ","_");
+			    	 ids = id.replace("/","");
+	    		   } 
+		    	    
+		    	    
+		    	    $("#"+pFolder+"sublist").append("<li class=\"sublist\" id=\""+ids+"\" onclick=\"getAll('"+folder+"','"+pFolder+"')\">"+ folder +"</li><ul class=\"no\"  id=\""+ids+"sublist\"></ul>"); 
+		    	 	// $("#"+pFolder+"sublist").append("<li id=\""+ids+"\" onclick=\"getAll('"+folder+"','"+pFolder+"')\">"+ folder +"</li>");
+		    	 
+		    	}
+		       
+
+		       $("#"+pFolder+"sublist").attr("class","yes");
+		        
+		    });
+}
+	
+	
+}
+function getAll(folder,bucketName)
+{
+	var flag=$("#Test").attr("class");
+	console.log(flag);
+	if(flag=="yes")
+	{
+	$("#"+folder).hide();
+	$("#"+folder).attr("class","done");
+	}
+
+else if(flag=="done")
+	{
+	$("#"+folder).show();
+	$("#"+folder).attr("class","yes");
+	}
+	
+else{
+	 $.post("amazonServlet3",
+			    {
+			        name: folder,
+			        bucketname: bucketName
+			       
+			    },
+			    function(data, status){
+				      
+			    	 var obj = JSON.parse(data);
+			    	 
+			    	 var ids = getId(folder);
+		    	     
+		    	  
+		    	     while(ids.search(" ")!=-1 || ids.search("/")!= -1)
+		    		   {
+		    		   	 id = ids.replace(" ","_");
+				    	 ids = id.replace("/","");
+		    		   } 
+		    	   
+		    	  
+		    	     $("#"+ids).append("<ul>");
+			    	
+			       for (x in obj) {
+			    	   
+			    	   var subFolders =   obj[x];
+			    	  
+			    
+			    	  //var elem = document.createElement("li");
+			    	 // elem.setAttribute("id",subFolders);
+			    	 // elem.setAttribute("onclick", "getAll('"+subFolders+"','"+bucketName+")");
+			    	  
+			    	  
+			    	
+		    	   
+			    	 var uds = getId(subFolders);
+		    	  
+		    	   
+		    	   
+		    	   
+			    	 $("#"+ids).append("<li id=\""+uds+"\" onclick=\"getAll('"+subFolders+"','"+bucketName+"')\">"+ subFolders +"</li>");
+			    	 
+			    	}
+			       
+			       $("#" + ids).append("</ul>");
+			       
+			       $("#"+folder).attr("class","yes");
+			      
+			    	        
+			    });
+	 
+}
+	 
+	 function getId(folder)
+	 {
+		 var ud = folder.replace(" ","_");
+    	 var uds = ud.replace("/","");
+	   var len = uds.length;
+	   
+	   while(uds.search(" ")!=-1 || uds.search("/")!= -1)
+		   {
+		   	 ud = uds.replace(" ","_");
+	    	 uds = ud.replace("/","");
+		   } 
+	    return uds;
+	 }
+}
+</script>
+</head>
+<body>
+
+<h1 align="center"> List Buckets </h1>
+<hr align="center" width="680px">
+<button id="display">Display Data</button>
+<div id="data">
+
+</div>
+</body>
+</html>

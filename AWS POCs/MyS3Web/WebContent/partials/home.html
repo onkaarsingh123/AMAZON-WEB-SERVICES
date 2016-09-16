@@ -1,0 +1,272 @@
+<div ng-controller="s3Controller" id="s3Control">
+	<script type="text/ng-template" id="myModalContent.html">
+    <h3 style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 16px;font-weight:bold;padding: 0px 10px 5px;background-color: #F3F3F3;background-image: linear-gradient(to bottom, #FFF, #E1E1E1);background-repeat: repeat-x;border-bottom: 1px solid #CCC;border-radius: 0.3em 0.3em 0px 0px;margin:-21px -27px 15px -27px">Create a Bucket - Select a Bucket Name</h3>
+     <form >
+		<div >  
+       	<div>
+         <div style="float:left"><label style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 14px;font-weight:bold;padding-top:5px">Name : </label></div>
+       	<div style="float:left;padding-left:5px"><input type="text" id="name" name="name" ng-model="bucket.name" placeholder="Bucket Name" > <div>  
+		</div>
+        <div>
+		<div style="float:left"> </div> <div style="float:right;padding-left:310px"> <button class="button" ng-click="createBucket()" style="height:30px;font-size: 14px;margin: 5px;padding: 6px 11px">Create</button>
+		  <button class="button" ng-click="cancel()" style="height:30px;font-size: 14px;margin: 0px;padding: 6px 11px; ">Cancel</button> </div>
+       </div>	
+      <a class="close-reveal-modal" ng-click="cancel()" >&#215;</a>	
+       </div>    
+      
+    </form>
+
+  </script>
+
+
+	<script type="text/ng-template" id="uploadModelContent.html">
+    <h3 style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 16px;font-weight:bold;padding: 0px 10px 5px;background-color: #F3F3F3;background-image: linear-gradient(to bottom, #FFF, #E1E1E1);background-repeat: repeat-x;border-bottom: 1px solid #CCC;border-radius: 0.3em 0.3em 0px 0px;margin:-21px -27px 15px -27px">Upload Object</h3>
+     <form  method="post" enctype="multipart/form-data">
+		<div >  
+       	<div>
+         <div style="float:left"><label style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 14px;font-weight:bold;padding-top:5px">Select a file to upload: </label> <input type="file" name="file" ng-model="document.fileInput" /> </div>
+		</div>
+        <div>
+		<div style="float:left"> </div> <div style="float:right;padding-left:310px"> <button class="button" ng-click="uploadObj()" style="height:30px;font-size: 14px;margin: 5px;padding: 6px 11px">Upload</button>
+		  <button class="button" ng-click="cancel()" style="height:30px;font-size: 14px;margin: 0px;padding: 6px 11px; ">Cancel</button> </div>
+       </div>	
+      <a class="close-reveal-modal" ng-click="cancel()" >&#215;</a>	
+       </div>    
+      
+    </form>
+
+  </script>
+
+	<script type="text/ng-template" id="folderModelContent.html">
+    <h3 style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 16px;font-weight:bold;padding: 0px 10px 5px;background-color: #F3F3F3;background-image: linear-gradient(to bottom, #FFF, #E1E1E1);background-repeat: repeat-x;border-bottom: 1px solid #CCC;border-radius: 0.3em 0.3em 0px 0px;margin:-21px -27px 15px -27px">Create a Folder</h3>
+     <form >
+		<div >  
+       	<div>
+         <div style="float:left"><label style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 14px;font-weight:bold;padding-top:5px">Name : </label></div>
+       	<div style="float:left;padding-left:5px"><input type="text" id="name" name="name" ng-model="folder.name" placeholder="Folder Name" > <div>  
+		</div>
+        <div>
+		<div style="float:left"> </div> <div style="float:right;padding-left:310px"> <button class="button" ng-click="ok()" style="height:30px;font-size: 14px;margin: 5px;padding: 6px 11px">Create</button>
+		  <button class="button" ng-click="cancel()" style="height:30px;font-size: 14px;margin: 0px;padding: 6px 11px; ">Cancel</button> </div>
+       </div>	
+      <a class="close-reveal-modal" ng-click="cancel()" >&#215;</a>	
+       </div>    
+      
+    </form>
+
+  </script>
+
+	<script type="text/ng-template" id="deleteObjectModelContent.html">
+    <h3 style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 16px;font-weight:bold;padding: 0px 10px 5px;background-color: #F3F3F3;background-image: linear-gradient(to bottom, #FFF, #E1E1E1);background-repeat: repeat-x;border-bottom: 1px solid #CCC;border-radius: 0.3em 0.3em 0px 0px;margin:-21px -27px 15px -27px">Delete Object</h3>
+     <form >
+		<div >  
+       	<div>
+         <div style="float:left"><label style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 14px;font-weight:bold;padding-top:5px">Are you sure you want to delete this Folder </label></div>
+		</div>
+        <div>
+		<div style="float:left"> </div> <div style="float:right;padding-left:310px"> <button class="button" ng-click="deleteObj()" style="height:30px;font-size: 14px;margin: 5px;padding: 6px 11px">Delete</button>
+		  <button class="button" ng-click="cancel()" style="height:30px;font-size: 14px;margin: 0px;padding: 6px 11px; ">Cancel</button> </div>
+       </div>	
+      <a class="close-reveal-modal" ng-click="cancel()" >&#215;</a>	
+       </div>    
+      
+    </form>
+
+  </script>
+
+
+	<script type="text/ng-template" id="displayTextModelContent.html">
+    <h3 style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 16px;font-weight:bold;padding: 0px 10px 5px;background-color: #F3F3F3;background-image: linear-gradient(to bottom, #FFF, #E1E1E1);background-repeat: repeat-x;border-bottom: 1px solid #CCC;border-radius: 0.3em 0.3em 0px 0px;margin:-21px -27px 15px -27px">Amazon S3 Message</h3>
+     <form >
+		<div >  
+       	<div>
+         <div style="float:left"><label style="font-family: Tahoma, 'Liberation Sans', Arial;font-size: 14px;font-weight:bold;padding-top:5px">{{textDisplay}}</label></div>
+		</div>
+        <div>
+		<div style="float:left"> </div> <div style="float:right;padding-left:310px"> <button class="button" ng-click="cancel()" style="height:30px;font-size: 14px;margin: 5px;padding: 6px 11px">Ok</button>
+	  </div>
+       </div>	
+      <a class="close-reveal-modal" ng-click="cancel()" >&#215;</a>	
+       </div>    
+      
+    </form>
+
+  </script>
+
+
+	<h3
+		style="padding-left: 10px; color: black; font-family: Tahoma, 'Liberation Sans', Arial; font-size: 16px; font-weight: bold; padding-top: 5px;">S3
+		Buckets</h3>
+
+	<top-bar>
+	<ul class="title-area">
+		<li toggle-top-bar class="menu-icon"><a href="#">Menu</a></li>
+	</ul>
+
+	<top-bar-section> <!-- Left Nav Section -->
+	<ul class="left"
+		style="color: black; font-family: Tahoma, 'Liberation Sans', Arial; font-size: 14px; padding-top: 5px;">
+
+		<li ng-show="spinnerActive==false" ng-if="spinnerActive==false"
+			style="margin-top: 8px; padding-left: 10px"><img
+			ng-src="http://localhost:8080/S3Web/img/view-refresh.png"
+			title="Refresh" ng-click="refresh()"
+			style="cursor: pointer; cursor: hand;" /><span
+			style="color: #ffffff; padding-left: 5px">Refresh</span></li>
+		<li ng-show="spinnerActive==true" ng-if="spinnerActive==true"
+			style="margin-top: 8px; padding-left: 10px"><img
+			ng-src="http://localhost:8080/S3Web/img/view-refresh.png"
+			title="Refresh"
+			style="opacity: 0.4; filter: alpha(opacity =      40);" /><span
+			style="color: #ffffff; padding-left: 5px">Refresh</span></li>
+		<li style="margin-top: 7px; padding-left: 10px"><img
+			ng-src="http://localhost:8080/S3Web/css/images/separator.png"
+			width="10" height="15" /></li>
+
+		<li ng-show="spinnerActive==false" ng-if="spinnerActive==false"
+			style="margin-top: 8px; padding-left: 10px"><img
+			ng-src="http://localhost:8080/S3Web/img/delete.png" title="Delete"
+			ng-click="deleteObject()" style="cursor: pointer; cursor: hand;" /></li>
+		<li ng-show="spinnerActive==true" ng-if="spinnerActive==true"
+			style="margin-top: 8px; padding-left: 10px"><img
+			ng-src="http://localhost:8080/S3Web/img/delete.png" title="Delete"
+			style="opacity: 0.4; filter: alpha(opacity =      40);" /></li>
+
+		<li style="margin-top: 7px;; padding-left: 10px"><img
+			ng-src="http://localhost:8080/S3Web/css/images/separator.png"
+			width="10" height="15" /></li>
+
+		<li ng-show="spinnerActive==false" ng-if="spinnerActive==false"
+			style="margin-top: 8px; padding-left: 5px"><img
+			ng-src="http://localhost:8080/S3Web/images/external_bucket.png"
+			ng-click="openBucket()" title="Create new Bucket"
+			style="cursor: pointer; cursor: hand;" /></li>
+
+		<li ng-show="spinnerActive==true" ng-if="spinnerActive==true"
+			style="margin-top: 8px; padding-left: 5px; opacity: 0.4; filter: alpha(opacity =      40);"><img
+			ng-src="http://localhost:8080/S3Web/images/external_bucket.png"
+			title="Create new Bucket" /></li>
+
+
+		<li ng-show="spinnerActive==false" ng-if="spinnerActive==false"
+			style="margin-top: 8px; padding-left: 5px"><img
+			ng-src="http://localhost:8080/S3Web/img/folder_new.png"
+			title="Create new Folder" ng-click="setFlag(true)"
+			style="cursor: pointer; cursor: hand;" /></li>
+		<li ng-show="spinnerActive==true" ng-if="spinnerActive==true"
+			style="margin-top: 8px; padding-left: 5px"><img
+			ng-src="http://localhost:8080/S3Web/img/folder_new.png"
+			title="Create new Folder"
+			style="opacity: 0.4; filter: alpha(opacity =      40);" /></li>
+
+
+		<li ng-show="spinnerActive==false" ng-if="spinnerActive==false"
+			style="margin-top: 8px; padding-left: 5px"><img
+			ng-src="http://localhost:8080/S3Web/img/upload.png" height="16"
+			width="16" title="Upload File" ng-click="uploadFile()"
+			style="cursor: pointer; cursor: hand;" /> <span
+			style="color: #ffffff; padding-left: 1px">Upload</span></li>
+		<li ng-show="spinnerActive==true" ng-if="spinnerActive==true"
+			style="margin-top: 8px; padding-left: 5px"><img
+			ng-src="http://localhost:8080/S3Web/img/upload.png" height="16"
+			width="16" title="Upload File"
+			style="opacity: 0.4; filter: alpha(opacity =      40);" /> <span
+			style="color: #ffffff; padding-left: 1px">Upload</span></li>
+
+		<li style="margin-top: 7px;; padding-left: 10px"><img
+			ng-src="http://localhost:8080/S3Web/css/images/separator.png"
+			width="10" height="15" /></li>
+	</ul>
+	</top-bar-section> </top-bar>
+
+
+
+	<!--  <div>Selected: {{node1.data.key?node1.data.key:"N/A"}}</div>  -->
+	<br />
+
+
+	<style>
+#resizable {
+	width: 250px;
+	height: 750px;
+	padding: 0.5em;
+	float: left;
+	overflow-x: auto;
+	overflow-y: auto;
+	border: 1px solid double rgb(51, 72, 102);
+}
+
+#resizable h3 {
+	text-align: center;
+	margin: 0;
+}
+</style>
+
+	<div id="resizable" class="ui-widget-content">
+		<span style="font-size: 14px; font-weight: bold;">All Buckets</span>
+		<ul
+			style="list-style-type: none; cursor: pointer; cursor: hand; width: 100%; height: 100%; color: black; font-family: Tahoma, 'Liberation Sans', Arial; font-size: 12px; padding-top: 5px;">
+
+			<li ng-repeat="bucket in bucketCollection"><img
+				ng-src="http://localhost:8080/S3Web/images/tree_bucket.png"
+				ng-click="displayTreefolder($index)" /> <span
+				style="opacity: 0.4; filter: alpha(opacity =      40); cursor: default;"
+				id="bucketTitle{{$index}}" ng-show="spinnerActive==true"
+				ng-if="spinnerActive==true">{{bucket.bucketName}}</span> <span
+				id="bucketTitle{{$index}}" ng-show="spinnerActive==false"
+				ng-if="spinnerActive==false"
+				ng-click="selectBucket((bucket.bucketName),$index)">{{bucket.bucketName}}</span>
+
+				<div id="tree{{$index}}" style="display: none; flex-direction: row">
+					<div class="tree-border">
+						<treecontrol class="tree-classic" tree-model="bucket.bucketList"
+							options="opts"
+							on-selection="selectTreeFolder($index,node,((bucket.bucketName)))"
+							selected-node="selected"> {{node.data.key}} </treecontrol>
+					</div>
+				</div></li>
+		</ul>
+	</div>
+	<!-- <p><strong>Sorting:</strong> {{tableParams.sorting()|json}}  -->
+	<span us-spinner="{radius:30, width:8, length: 16}"></span>
+	<div style="float: left; border: 1px solid; width: 70%;">
+		<table ng-table="tableParams" class="table">
+			<tr ng-repeat="row in rowCollection">
+
+				<td ng-switch="row.type" data-title="'Name'" sortable="'key'">
+					<div ng-switch-when="file">
+						<img ng-src="http://localhost:8080/S3Web/images/file.png" />{{row.key}}
+					</div>
+					<div ng-switch-when="folder">
+						<img ng-src="http://localhost:8080/S3Web/images/folder-closed.png"
+							ng-show="spinnerActive==true" ng-if="spinnerActive==true"
+							style="opacity: 0.4; filter: alpha(opacity =      40); cursor: default;" />
+
+						<img ng-src="http://localhost:8080/S3Web/images/folder-closed.png"
+							ng-show="spinnerActive==false" ng-if="spinnerActive==false"
+							ng-click="tableFolder((row.key),(row.parent),(row.bucketName))"
+							style="cursor: pointer; cursor: hand;" />{{row.key}}
+
+					</div>
+				</td>
+
+				<td data-title="'Size'" sortable="'size'">{{row.size}}</td>
+				<td data-title="'Type'" sortable="'type'">{{row.type}}</td>
+				<td data-title="'Date Modified'" sortable="'date'">
+					{{row.date}}</td>
+
+			</tr>
+
+
+			<tr ng-show="FlagValue==true" ng-if="FlagValue==true">
+
+				<td colspan="7" ng-include src="'partials/editRow.html'"></td>
+			</tr>
+
+
+		</table>
+	</div>
+
+</div>
+
+<footer> </footer>
